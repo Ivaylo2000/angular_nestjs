@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      # MYSQL_ROOT_PASSWORD: 1234
+      # # MYSQL_DATABASE: courses_db
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: courses_db
+      # MYSQL_PASSWORD: 1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/metasim.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/public/images:/app/public/images
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: 1234
+      DB_NAME: courses_db
+      PORT: 3000
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "4200:80"
+
+volumes:
+  db_data:

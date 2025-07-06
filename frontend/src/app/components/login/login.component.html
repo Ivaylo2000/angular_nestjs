@@ -1,0 +1,34 @@
+<div class="login-container">
+  <h1>Welcome</h1>
+  <form class="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <h2>Let's get you logged-in</h2>
+    <div class="inputs-container">
+      <input-with-image
+        type="email"
+        [(model)]="email"
+        name="email"
+        placeholder="test@test.com"
+        iconSrc="/icons/drafts.svg"
+        iconAlt="show password"
+      ></input-with-image>
+
+      <input-with-image
+        [type]="passwordFieldType"
+        [(model)]="password"
+        name="password"
+        placeholder="1234"
+        [iconSrc]="
+          passwordFieldType === 'password'
+            ? '/icons/visibility_off.svg'
+            : '/icons/visibility.svg'
+        "
+        iconAlt="toggle password visibility"
+        iconClass="toggle-password"
+        (iconClick)="togglePasswordVisibility()"
+      ></input-with-image>
+    </div>
+    <button class="submitButton" type="submit" [disabled]="loginForm.invalid">
+      Log-in
+    </button>
+  </form>
+</div>

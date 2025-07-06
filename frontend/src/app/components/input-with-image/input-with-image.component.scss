@@ -1,0 +1,45 @@
+@import "../../app.scss";
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+
+  input {
+    border-radius: 2rem;
+    border: none;
+    padding: 8px 16px;
+    color: $dark-blue;
+    font-size: $font-body;
+
+    &::placeholder {
+      color: $dark-blue;
+    }
+  }
+
+  button {
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.input-wrapper input {
+  padding-right: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.icon-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+}
+img.toggle-password {
+  cursor: pointer;
+}

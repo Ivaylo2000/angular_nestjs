@@ -1,0 +1,61 @@
+<div class="courses-page">
+  <div class="button-holder">
+    <button *ngIf="isLoggedIn" (click)="onLogout()">Log-out</button>
+    <button *ngIf="!isLoggedIn" (click)="redirectToLogin()">Log-in</button>
+  </div>
+
+  <h1>Courses</h1>
+
+  <main class="courses-main">
+    <nav class="search-bar">
+      <input-with-image
+        type="text"
+        [(model)]="text"
+        name="text"
+        placeholder="Enter text"
+        iconSrc="/icons/search.svg"
+        iconAlt="show password"
+      ></input-with-image>
+    </nav>
+
+    <ul class="courses-list">
+      <li class="course-item" *ngFor="let course of filteredCourses">
+        <div class="course-top-bar">
+          <h3 *ngIf="!course.editing">{{ course.title }}</h3>
+          <input *ngIf="course.editing" [(ngModel)]="course.title" />
+
+          <img
+            class="edit-course-icon"
+            [src]="course.editing ? '/icons/check.svg' : '/icons/edit.svg'"
+            [alt]="course.editing ? 'save' : 'edit'"
+            (click)="course.editing ? saveCourse(course) : toggleEdit(course)"
+          />
+        </div>
+
+        <img
+          *ngIf="!course.editing"
+          [src]="'http://localhost:3000' + course.imageUrl"
+          alt="Course Image"
+        />
+        <input
+          *ngIf="course.editing"
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event, course)"
+          id="file-upload-{{ course.id }}"
+        />
+
+        <p *ngIf="!course.editing">{{ course.description }}</p>
+        <textarea
+          *ngIf="course.editing"
+          [(ngModel)]="course.description"
+          rows="3"
+        ></textarea>
+
+        <div *ngIf="course.editing" class="edit-buttons">
+          <button (click)="cancelEdit(course)">Cancel</button>
+        </div>
+      </li>
+    </ul>
+  </main>
+</div>
